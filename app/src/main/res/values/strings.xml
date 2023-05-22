@@ -3,6 +3,7 @@
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
+    <string name="splashscreen">splashscreen</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
     <string name="signin">Sign In</string>
@@ -17,6 +18,12 @@
     <string name="register_now">Don\'t have an account?</string>
     <string name="register_now_btn">Register</string>
     <string name="artikel">Artikel</string>
+    <string name="article_title">Article Title</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet consectetur. Pharetra pellentesque at at amet lectus blandit. Metus risus mi tellus nisi leo cursus a pellentesque ut. Fermentum viverra curabitur eget odio amet vestibulum. Laoreet integer cursus ut netus faucibus. Duis mattis sem diam aliquam nunc quis urna nullam. Congue cursus commodo sit mi duis aliquet orci. Nisi sollicitudin velit imperdiet donec nisl donec. Gravida eget cras ultrices facilisis.\nId donec nisi at tincidunt cras ultricies ut. Risus eu in lorem congue consectetur in. Lacinia pulvinar quam lacus proin id lacus. Eget rhoncus risus odio urna. Varius nisl varius diam in et. Nulla duis id adipiscing malesuada enim magna. Id morbi augue dui ipsum nunc. Nisl etiam sit consequat donec etiam risus ipsum. Etiam magna dis tellus elit eget. Eget eget vivamus in mollis pretium scelerisque. Sed velit ut lorem maecenas lacus nunc.</string>
+    <string name="onboard_description1">Selamat datang di Aplikasi Penerjemah Hasil X-ray. Mari kita mulai interpretasi!</string>
+    <string name="onboard_description2">Kami akan membantumu memahami  lebih jelas hasil scanmu</string>
+    <string name="onboard_description3">Terjemahkan hasil X-ray dengan cepat dan akurat dengan X-DETECT</string>
+    <string name="onboard_get_started">Get Started</string>
     <string name="home">Home</string>
     <string name="edit">edit</string>
     <string name="profile">Profile</string>
