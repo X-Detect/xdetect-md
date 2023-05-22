@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">xdetect</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="signin">Sign In</string>
+    <string name="login_title">Log In</string>
+    <string name="forget_pass">Forget Password?</string>
+    <string name="hint_name">Masukkan nama</string>
+    <string name="hint_email">Masukkan email</string>
+    <string name="hint_phone">Masukkan nomor handphone</string>
+    <string name="hint_password">Masukkan password</string>
+    <string name="login">Login</string>
+    <string name="register_title">Register</string>
+    <string name="register_now">Don\'t have an account?</string>
+    <string name="register_now_btn">Register</string>
+    <string name="artikel">Artikel</string>
+    <string name="home">Home</string>
+    <string name="edit">edit</string>
+    <string name="profile">Profile</string>
+    <string name="sample_name">Radit Saputra</string>
+    <string name="sample_email">lalallaa@gmail.com</string>
+    <string name="sample_password">12345678</string>
+    <string name="sample_phone">081366538890</string>
+    <string name="logout">Logout</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
