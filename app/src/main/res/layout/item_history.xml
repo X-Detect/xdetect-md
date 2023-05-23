@@ -6,10 +6,11 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginTop="4dp"
     android:layout_marginEnd="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginBottom="4dp"
     card_view:cardElevation="8dp"
+
     card_view:cardCornerRadius="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,30 +32,42 @@
             tools:src="@drawable/img_article" />
 
         <TextView
-            android:id="@+id/tv_title_article"
+            android:id="@+id/tv_date_history"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            android:textSize="16sp"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@id/img_item_article"
             card_view:layout_constraintTop_toTopOf="@id/img_item_article"
-            tools:text="@string/article_title" />
+            tools:text="@string/date_dummy" />
 
         <TextView
-            android:id="@+id/tv_desc_article"
+            android:id="@+id/tv_detection_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:maxLines="1"
+            android:textSize="20sp"
+            card_view:layout_constraintStart_toStartOf="@id/tv_date_history"
+            card_view:layout_constraintTop_toBottomOf="@id/tv_date_history"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            tools:text="@string/pneumoninia" />
+
+        <TextView
+            android:id="@+id/tv_detection"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="4dp"
             android:textSize="16sp"
-            android:maxLines="3"
-            card_view:layout_constraintBottom_toBottomOf="@+id/img_item_article"
+            android:maxLines="2"
+            card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="12dp"
-            card_view:layout_constraintStart_toStartOf="@id/tv_title_article"
-            card_view:layout_constraintTop_toBottomOf="@id/tv_title_article"
-            tools:text="@string/lorem_ipsum" />
+            card_view:layout_constraintStart_toStartOf="@id/tv_detection_category"
+            card_view:layout_constraintTop_toBottomOf="@id/tv_detection_category"
+            tools:text="@string/scan_result" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

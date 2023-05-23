@@ -8,9 +8,8 @@
     <ImageView
         android:id="@+id/img_onboard"
         android:layout_width="285dp"
-        android:layout_height="221dp"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/splashscreen"
-        android:scaleType="centerCrop"
         android:src="@drawable/img_onboard"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_desc_onboard"

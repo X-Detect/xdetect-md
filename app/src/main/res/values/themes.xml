@@ -14,9 +14,12 @@
         <!-- Customize your theme here. -->
         <item name="colorTertiary">@color/blue</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
-
     </style>
 
+    <style name="roundedCorner30">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">30dp</item>
+    </style>
 
     <style name="roundedCorner20">
         <item name="cornerFamily">rounded</item>

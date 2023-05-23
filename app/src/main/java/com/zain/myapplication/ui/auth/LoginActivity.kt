@@ -20,13 +20,7 @@ class LoginActivity : AppCompatActivity() {
                     Intent(this@LoginActivity, RegisterActivity::class.java)
                 startActivity(moveToRegisterActivity)
             }
-            tvRegisterNow.setOnClickListener {
-                val moveToRegisterActivity =
-                    Intent(this@LoginActivity, RegisterActivity::class.java)
-                startActivity(moveToRegisterActivity)
-            }
         }
-
         setInput()
     }
 

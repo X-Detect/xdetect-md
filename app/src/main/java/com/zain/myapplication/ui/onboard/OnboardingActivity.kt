@@ -5,13 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.core.app.ActivityOptionsCompat
-import androidx.viewpager2.widget.ViewPager2
 import com.zain.myapplication.R
 import com.zain.myapplication.data.local.model.Onboard
 import com.zain.myapplication.databinding.ActivityOnboardingBinding
+import com.zain.myapplication.ui.auth.LoginActivity
 import com.zain.myapplication.ui.onboard.adapter.OnboardListAdapter
 import com.zain.myapplication.ui.onboard.adapter.OnboardingPageChangeCallback
-import com.zain.myapplication.ui.auth.RegisterActivity
 
 class OnboardingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnboardingBinding
@@ -23,15 +22,15 @@ class OnboardingActivity : AppCompatActivity() {
     private val onboardList: List<Onboard> = listOf(
         Onboard(
             img = R.drawable.img_onboard,
-            description = getString(R.string.onboard_description1)
+            description = "Selamat datang di Aplikasi Penerjemah Hasil X-ray. Mari kita mulai interpretasi!"
         ),
         Onboard(
             img = R.drawable.img_onboard_2,
-            description = getString(R.string.onboard_description1)
+            description = "Kami akan membantumu memahami  lebih jelas hasil scanmu"
         ),
         Onboard(
             img = R.drawable.img_onboard_3,
-            description = getString(R.string.onboard_description1)
+            description = "Terjemahkan hasil X-ray dengan cepat dan akurat dengan X-DETECT"
         ),
     )
 
@@ -53,7 +52,7 @@ class OnboardingActivity : AppCompatActivity() {
         binding.apply {
             btnOnboard.setOnClickListener {
                 val moveToSignInActivity =
-                    Intent(this@OnboardingActivity, RegisterActivity::class.java)
+                    Intent(this@OnboardingActivity, LoginActivity::class.java)
                 startActivity(moveToSignInActivity, ActivityOptionsCompat.makeSceneTransitionAnimation(this@OnboardingActivity).toBundle())
             }
             btnRightOnboard.setOnClickListener {
