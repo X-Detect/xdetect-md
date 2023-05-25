@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Xdetect"
         tools:targetApi="31">
         <activity
-            android:name=".DetectionResultActivity"
+            android:name=".ui.detection.DetectionResultActivity"
             android:exported="false" />
         <activity
             android:name=".ui.onboard.OnboardingActivity"
