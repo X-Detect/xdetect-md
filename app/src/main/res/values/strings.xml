@@ -48,4 +48,10 @@
     <string name="penjelasan">Penjelasan</string>
     <string name="lorem_ipsum2">Lorem ipsum dolor sit amet consectetur. Dolor velit sit egestas proin dui mattis mattis. Molestie non consequat senectus ac felis sem ipsum. Hac viverra vitae mauris sit velit vestibulum egestas ut feugiat. Massa urna maecenas venenatis habitasse scelerisque dapibus.</string>
     <string name="saran">Saran</string>
+    <string name="upload">Upload</string>
+    <string name="login_now">Already have an account?</string>
+    <string name="login_now_btn">Login</string>
+    <string name="password_invalid">Minimal terdiri dari 8 karakter</string>
+    <string name="email_invalid">Masukkan alamat email yang valid</string>
+    <string name="preview">Preview</string>
 </resources>
