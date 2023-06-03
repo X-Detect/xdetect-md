@@ -11,5 +11,5 @@ data class AuthResponse(
     val msg: String,
 
     @field:SerializedName("success")
-    val success: String
+    val success: Boolean
 )

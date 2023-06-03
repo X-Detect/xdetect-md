@@ -54,4 +54,5 @@
     <string name="password_invalid">Minimal terdiri dari 8 karakter</string>
     <string name="email_invalid">Masukkan alamat email yang valid</string>
     <string name="preview">Preview</string>
+    <string name="username">Username</string>
 </resources>

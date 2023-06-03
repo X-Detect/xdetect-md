@@ -9,16 +9,16 @@ import retrofit2.http.*
 interface ApiService {
 
     @FormUrlEncoded
-    @POST("Signup")
+    @POST("signup")
     suspend fun register(
-        @Field("name") name: String,
         @Field("email") email: String,
-        @Field("phome") phome: String,
-        @Field("password") password: String
+        @Field("password") password: String,
+        @Field("name") name: String,
+        @Field("phone") phone: String
     ): AuthResponse
 
     @FormUrlEncoded
-    @POST("Signin")
+    @POST("signin")
     suspend fun login(
         @Field("name") name: String,
         @Field("password") password: String

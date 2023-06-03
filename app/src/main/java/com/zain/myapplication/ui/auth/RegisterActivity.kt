@@ -11,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityOptionsCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -49,13 +50,13 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.btnRegister.setOnClickListener {
-            val name = binding.etName.text.toString()
+            val name = binding.etUsername.text.toString()
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
-            val phone = "08123123123"
+            val phone = binding.etPhone.text.toString()
             when {
                 name.isEmpty() -> {
-                    binding.etNameLayout.error = "Masukkan nama"
+                    binding.etUsernameLayout.error = "Masukkan nama"
                 }
                 email.isEmpty() -> {
                     binding.etEmailLayout.error = "Masukkan email"
@@ -63,9 +64,12 @@ class RegisterActivity : AppCompatActivity() {
                 password.isEmpty() -> {
                     binding.etPasswordLayout.error = "Masukkan password"
                 }
+                phone.isEmpty() -> {
+                    binding.etPhoneLayout.error = "Masukkan nomor HP"
+                }
                 Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length >= 8 -> {
                     binding.apply {
-                        etName.onEditorAction(EditorInfo.IME_ACTION_DONE)
+                        etUsername.onEditorAction(EditorInfo.IME_ACTION_DONE)
                         etEmail.onEditorAction(EditorInfo.IME_ACTION_DONE)
                         etPassword.onEditorAction(EditorInfo.IME_ACTION_DONE)
                     }
@@ -76,14 +80,15 @@ class RegisterActivity : AppCompatActivity() {
                             }
                             is Result.Success -> {
                                 binding.progressBar.visibility = View.GONE
-                                val moveToMainMenuActivity =
-                                    Intent(this@RegisterActivity, MenuActivity::class.java)
-                                startActivity(
-                                    moveToMainMenuActivity,
-                                    ActivityOptionsCompat.makeSceneTransitionAnimation(this@RegisterActivity)
-                                        .toBundle()
-                                )
-                                finish()
+                                AlertDialog.Builder(this).apply {
+                                    setTitle("Yey!")
+                                    setMessage("Berhasil Register, silakan Login")
+                                    setPositiveButton("Lanjut") { _, _ ->
+                                        finish()
+                                    }
+                                    create()
+                                    show()
+                                }
                             }
                             is Result.Error -> {
                                 binding.progressBar.visibility = View.GONE

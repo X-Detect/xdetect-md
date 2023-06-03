@@ -15,23 +15,33 @@ class UserRepository private constructor(
 
     fun isLogin(): Flow<String?> = flow { emitAll(userPreference.getToken()) }
 
-    fun login(email: String, password: String): Flow<Result<String>> = flow {
+    fun login(name: String, password: String): Flow<Result<String>> = flow {
         emit(Result.Loading)
         try {
-            val response = userApiService.login(email, password)
+            Log.d("LOGIN", "login: ${name} ${password}")
+            val response = userApiService.login(name, password)
+            Log.d("LOGIN 2", "login 2: ${response}")
             val token = response.data.accessToken
+            Log.d("LOGIN 3", "login 3: ${token}")
             userPreference.saveToken(token)
             emit(Result.Success(response.msg))
+
         } catch (e: Exception) {
             Log.d("UserRepository", "login: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
     }
 
-    fun register(email: String, password: String, name: String, phone: String): Flow<Result<String>> = flow {
+    fun register(
+        email: String,
+        password: String,
+        name: String,
+        phone: String
+    ): Flow<Result<String>> = flow {
         emit(Result.Loading)
 
         try {
+            Log.d("register", "Register: ${email} pass ${password} name ${name} phone ${phone}")
             val response = userApiService.register(email, password, name, phone)
             val token = response.data.accessToken
             userPreference.saveToken(token)

@@ -3,7 +3,6 @@ package com.zain.myapplication.ui.auth
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
@@ -33,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupAction()
-        playAnimation()
+//        playAnimation()
     }
 
     private fun setupAction() {
@@ -45,18 +44,18 @@ class LoginActivity : AppCompatActivity() {
             )
         }
         binding.btnLogin.setOnClickListener {
-            val name = binding.etEmail.text.toString()
+            val name = binding.etUsername.text.toString()
             val password = binding.etPassword.text.toString()
             when {
                 name.isEmpty() -> {
-                    binding.etEmailLayout.error = "Masukkan username"
+                    binding.etUsernameLayout.error = "Masukkan username"
                 }
                 password.isEmpty() -> {
                     binding.etPasswordLayout.error = "Masukkan password"
                 }
-                Patterns.EMAIL_ADDRESS.matcher(name).matches() && password.length >= 8 -> {
+                password.length >= 8 -> {
                     binding.apply {
-                        etEmail.onEditorAction(EditorInfo.IME_ACTION_DONE)
+                        etUsername.onEditorAction(EditorInfo.IME_ACTION_DONE)
                         etPassword.onEditorAction(EditorInfo.IME_ACTION_DONE)
                     }
                     authViewModel.login(name, password).observe(this) { result ->
@@ -66,13 +65,9 @@ class LoginActivity : AppCompatActivity() {
                             }
                             is Result.Success -> {
                                 binding.progressBar.visibility = View.GONE
-                                val moveToMainMenuActivity =
+                                val moveToMenuActivity =
                                     Intent(this@LoginActivity, MenuActivity::class.java)
-                                startActivity(
-                                    moveToMainMenuActivity,
-                                    ActivityOptionsCompat.makeSceneTransitionAnimation(this@LoginActivity)
-                                        .toBundle()
-                                )
+                                startActivity(moveToMenuActivity)
                             }
                             is Result.Error -> {
                                 binding.progressBar.visibility = View.GONE
@@ -86,7 +81,7 @@ class LoginActivity : AppCompatActivity() {
                 else -> {
                     Toast.makeText(
                         this@LoginActivity,
-                        "Invalid email or password",
+                        "Invalid username or password",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -94,7 +89,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun playAnimation() {
+//    private fun playAnimation() {
 //        ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
 //            duration = 6000
 //            repeatCount = ObjectAnimator.INFINITE
@@ -135,5 +130,5 @@ class LoginActivity : AppCompatActivity() {
 //            )
 //            startDelay = 500
 //        }.start()
-    }
+//    }
 }

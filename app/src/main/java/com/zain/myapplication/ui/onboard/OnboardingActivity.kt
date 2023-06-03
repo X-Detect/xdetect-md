@@ -1,18 +1,33 @@
 package com.zain.myapplication.ui.onboard
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.app.ActivityOptionsCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.zain.myapplication.R
 import com.zain.myapplication.data.local.model.Onboard
 import com.zain.myapplication.databinding.ActivityOnboardingBinding
+import com.zain.myapplication.ui.MenuActivity
+import com.zain.myapplication.ui.auth.AuthViewModel
+import com.zain.myapplication.ui.auth.AuthViewModelFactory
 import com.zain.myapplication.ui.auth.LoginActivity
 import com.zain.myapplication.ui.onboard.adapter.OnboardListAdapter
 import com.zain.myapplication.ui.onboard.adapter.OnboardingPageChangeCallback
 
 class OnboardingActivity : AppCompatActivity() {
+
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
+
+    private val authViewModel: AuthViewModel by viewModels {
+        AuthViewModelFactory.getInstance(dataStore)
+    }
+
     private lateinit var binding: ActivityOnboardingBinding
     private lateinit var onboardListAdapter: OnboardListAdapter
 
@@ -39,11 +54,20 @@ class OnboardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        authViewModel.isLogin().observe(this) {
+            if (!it.isNullOrEmpty()) {
+                val moveToMainMenuActivity =
+                    Intent(this@OnboardingActivity, MenuActivity::class.java)
+                startActivity(moveToMainMenuActivity)
+                finish()
+            }
+        }
+
         onboardingPageChangeCallback = OnboardingPageChangeCallback(
             viewPager = binding.viewpagerOnboard,
             btnLeft = binding.btnLeftOnboard,
             btnRight = binding.btnRightOnboard,
-            btnOnboard= binding.btnOnboard,
+            btnOnboard = binding.btnOnboard,
             pageSize = onboardList.size,
         )
         setOnboardList()
@@ -53,7 +77,10 @@ class OnboardingActivity : AppCompatActivity() {
             btnOnboard.setOnClickListener {
                 val moveToSignInActivity =
                     Intent(this@OnboardingActivity, LoginActivity::class.java)
-                startActivity(moveToSignInActivity, ActivityOptionsCompat.makeSceneTransitionAnimation(this@OnboardingActivity).toBundle())
+                startActivity(moveToSignInActivity,
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(this@OnboardingActivity)
+                        .toBundle()
+                )
             }
             btnRightOnboard.setOnClickListener {
                 if (currentPosition < onboardList.size - 1)
@@ -82,7 +109,7 @@ class OnboardingActivity : AppCompatActivity() {
                 btnRightOnboard.visibility = View.VISIBLE
             }
 
-            if(currentPosition == onboardList.size - 1)
+            if (currentPosition == onboardList.size - 1)
                 btnOnboard.visibility = View.VISIBLE
             else
                 btnOnboard.visibility = View.INVISIBLE
