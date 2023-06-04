@@ -107,7 +107,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_password"
                 app:passwordToggleEnabled="true">
 
-                <com.zain.myapplication.ui.components.PasswordEditText
+                <com.zain.xdetect.ui.components.PasswordEditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

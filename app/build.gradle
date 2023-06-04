@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.zain.myapplication'
+    namespace 'com.zain.xdetect'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.zain.myapplication"
+        applicationId "com.zain.xdetect"
         minSdk 24
         targetSdk 33
         versionCode 1
