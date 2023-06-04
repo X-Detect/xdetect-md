@@ -20,7 +20,7 @@
             android:name=".ui.onboard.OnboardingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.article.DetailArticleActivity"
+            android:name=".ui.article.detailarticle.DetailArticleActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MenuActivity"

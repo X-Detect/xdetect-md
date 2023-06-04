@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity() {
         AuthViewModelFactory.getInstance(dataStore)
     }
 
-    private var isLogin = false
+    private var isLogin = true
+//    private var isLogin = false
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
