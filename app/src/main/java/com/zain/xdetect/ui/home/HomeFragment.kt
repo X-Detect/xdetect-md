@@ -3,7 +3,6 @@ package com.zain.xdetect.ui.home
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,18 +10,19 @@ import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.zain.xdetect.R
 import com.zain.xdetect.data.local.model.Result
-import com.zain.xdetect.data.remote.model.article.ArticleItem
 import com.zain.xdetect.data.remote.model.auth.DataUser
 import com.zain.xdetect.databinding.FragmentHomeBinding
 import com.zain.xdetect.ui.auth.AuthViewModel
 import com.zain.xdetect.ui.auth.AuthViewModelFactory
 import com.zain.xdetect.ui.auth.RegisterActivity
-import com.zain.xdetect.ui.article.detailarticle.DetailArticleActivity
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 
 class HomeFragment : Fragment() {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")

@@ -1,14 +1,22 @@
 package com.zain.xdetect.ui.profile
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -23,6 +31,10 @@ import com.zain.xdetect.ui.auth.AuthViewModelFactory
 import com.zain.xdetect.data.local.model.Result
 import com.zain.xdetect.data.remote.model.auth.DataUser
 import com.zain.xdetect.ui.auth.RegisterActivity
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
+import com.zain.xdetect.ui.auth.LoginActivity
+import com.zain.xdetect.ui.camera.CameraActivity
 
 class ProfileFragment : Fragment() {
 
@@ -55,12 +67,12 @@ class ProfileFragment : Fragment() {
 
         authViewModel.isLogin().observe(requireActivity()) { uid ->
             if (uid.isNullOrEmpty()) {
-                Log.i("PROFILE", "SIUUUU GA GET DATA")
-                navigateToSignup()
+                Log.i("PROFILE", "OKAYUU GA GET DATA")
+                navigateToLogin()
             } else {
                 this.uid = uid.toString()
-                Log.i("PROFILE", "SIUUUU GETDATA $uid")
-                Log.i("PROFILE", "SIUUUU $isAdded")
+                Log.i("PROFILE", "OKAYUU GETDATA $uid")
+                Log.i("PROFILE", "OKAYUU $isAdded")
                 if (isAdded)
                     getDataUser(uid)
             }
@@ -95,27 +107,26 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setDataUserView(dataUser: DataUser) {
-        Log.i("SETDATAUSER", "aman ${dataUser.imgUrl}")
+        Log.i("SETDATAUSER", "OKAY ${dataUser.imgUrl}")
         val defaultImg = "https://i.pinimg.com/564x/8e/e3/51/8ee351b4914b264f69e748a9df1f2541.jpg"
         val shownImgUrl = dataUser.imgUrl ?: defaultImg
         binding.apply {
             etName.setText(dataUser.name)
             etEmail.setText(dataUser.email)
+            etPhone.setText(dataUser.phone)
             Glide.with(requireActivity())
                 .load(shownImgUrl)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
                 .into(binding.imgPhoto)
         }
     }
 
-    private fun navigateToSignup() {
+    private fun navigateToLogin() {
         Toast.makeText(
             requireContext(),
             getString(R.string.logout),
             Toast.LENGTH_SHORT
         ).show()
-        startActivity(Intent(requireActivity(), RegisterActivity::class.java))
+        startActivity(Intent(requireActivity(), LoginActivity::class.java))
         activity?.finish()
     }
 
@@ -125,7 +136,29 @@ class ProfileFragment : Fragment() {
             btnLogout.setOnClickListener {
                 logout()
             }
-
+            btnIvEditProfile.setOnClickListener {
+                isEditing = true
+                changeEditable()
+            }
+            btnCancel.setOnClickListener {
+                isEditing = false
+                changeEditable()
+            }
+            imgPhoto.setOnClickListener {
+                if (isEditing) {
+                    if (!allPermissionsGranted()) ActivityCompat.requestPermissions(
+                        requireActivity(),
+                        REQUIRED_PERMISSIONS,
+                        REQUEST_CODE_PERMISSIONS
+                    )
+                    else {
+                        startCameraX()
+                    }
+                }
+            }
+            btnSaveChanges.setOnClickListener {
+                saveChanges()
+            }
         }
     }
 
@@ -151,7 +184,184 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    companion object {
+    private fun saveChanges() {
+        val currentEmail = dataUser.email
+        val currentName = dataUser.name
+        val newName = binding.etName.text.toString()
+        val newEmail = binding.etEmail.text.toString()
+        val currentPassword = binding.etPassword.text.toString()
+        val newPassword = binding.etNewPassword.text.toString()
+        when {
+            !Patterns.EMAIL_ADDRESS.matcher(newEmail).matches() -> {
+                binding.etEmailLayout.error = "Email does not match the format"
+            }
+            newName.isEmpty() -> {
+                binding.etName.error = "Enter your name"
+            }
+            currentPassword.isEmpty() && newPassword.isNotEmpty() -> {
+                binding.etPasswordLayout.error = "Enter your current password"
+            }
+            newPassword.isNotEmpty() && newPassword.length <= 8 -> {
+                binding.etNewPasswordLayout.error =
+                    "New Password must be more than 8 characters"
+            }
+            else -> {
+                if (currentName != newName)
+                    authViewModel.editName(
+                        uid,
+                        newName,
+                        currentName
+                    ).observe(requireActivity()) { result ->
+                        when (result) {
+                            is Result.Loading -> {
+                                binding.progressBar.visibility = View.VISIBLE
+                            }
+                            is Result.Success -> {
+                                isEditing = false
+                                changeEditable()
+                                binding.progressBar.visibility = View.GONE
+                                AlertDialog.Builder(requireActivity()).apply {
+                                    setTitle("Success")
+                                    setMessage(result.data)
+                                    setPositiveButton("Next") { dialog, _ ->
+                                        dialog.cancel()
+                                        getDataUser(uid)
+                                    }
+                                    create()
+                                    show()
+                                }
+                                Log.i("Output Name", result.data)
+                            }
+                            is Result.Error -> {
+                                isEditing = false
+                                changeEditable()
+                                binding.progressBar.visibility = View.GONE
+                                Toast.makeText(
+                                    requireActivity(),
+                                    getString(R.string.msg_failed_changes_name),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                Log.i("Name", result.error)
+                            }
+                        }
+                    }
+                if ((currentPassword.isNotEmpty() && newPassword.isNotEmpty()) || (currentEmail != newEmail))
+                    authViewModel.editEmailPassword(
+                        uid,
+                        currentEmail,
+                        newEmail,
+                        currentPassword,
+                        newPassword
+                    ).observe(requireActivity()) { result ->
+                        when (result) {
+                            is Result.Loading -> {
+                                binding.progressBar.visibility = View.VISIBLE
+                            }
+                            is Result.Success -> {
+                                isEditing = false
+                                changeEditable()
+                                binding.progressBar.visibility = View.GONE
+                                AlertDialog.Builder(requireActivity()).apply {
+                                    setTitle("Success")
+                                    setMessage(result.data)
+                                    setPositiveButton("Next") { dialog, _ ->
+                                        dialog.cancel()
+                                        getDataUser(uid)
+                                    }
+                                    create()
+                                    show()
+                                }
+                                Log.i("Output Email", result.data)
+                            }
+                            is Result.Error -> {
+                                isEditing = false
+                                changeEditable()
+                                binding.progressBar.visibility = View.GONE
+                                Toast.makeText(
+                                    requireActivity(),
+                                    getString(R.string.msg_failed_changes),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                setDataUserView(dataUser)
+                                Log.i("Email", result.error)
+                            }
+                        }
+                    }
+            }
+        }
+    }
 
+    private fun changeEditable() {
+        binding.apply {
+            etName.isEnabled = isEditing
+            etPhone.isEnabled = isEditing
+            etEmail.isEnabled = isEditing
+            etPassword.isEnabled = isEditing
+            etNewPassword.isEnabled = isEditing
+            etEmailLayout.error = null
+            etNameLayout.error = null
+            etPasswordLayout.error = null
+            etNewPasswordLayout.error = null
+            etPassword.setText("")
+            etNewPassword.setText("")
+            if (isEditing) {
+                binding.btnIvEditProfile.visibility = View.GONE
+                imgPhoto.alpha = 0.7f
+                binding.btnLogout.visibility = View.GONE
+                binding.tvNewPassword.visibility = View.VISIBLE
+                binding.etNewPasswordLayout.visibility = View.VISIBLE
+                binding.btnSaveChanges.visibility = View.VISIBLE
+                binding.btnCancel.visibility = View.VISIBLE
+                binding.etPasswordLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+                binding.etNewPasswordLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+            } else {
+                binding.btnIvEditProfile.visibility = View.VISIBLE
+                imgPhoto.alpha = 1f
+                binding.btnLogout.visibility = View.VISIBLE
+                binding.tvNewPassword.visibility = View.INVISIBLE
+                binding.etNewPasswordLayout.visibility = View.INVISIBLE
+                binding.btnSaveChanges.visibility = View.INVISIBLE
+                binding.btnCancel.visibility = View.INVISIBLE
+                binding.etPasswordLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                binding.etNewPasswordLayout.endIconMode = TextInputLayout.END_ICON_NONE
+            }
+        }
+    }
+    
+
+    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            if (!allPermissionsGranted()) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.allow_permission),
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            } else {
+                startCameraX()
+            }
+        }
+    }
+
+    private fun startCameraX() {
+        val intent = Intent(requireActivity(), CameraActivity::class.java)
+        intent.putExtra(CameraActivity.IS_DETECTION, false)
+
+        startActivity(intent)
+    }
+
+    companion object {
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private const val REQUEST_CODE_PERMISSIONS = 10
     }
 }

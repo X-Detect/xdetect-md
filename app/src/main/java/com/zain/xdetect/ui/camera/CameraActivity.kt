@@ -4,28 +4,26 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import com.zain.xdetect.R
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.zain.xdetect.data.remote.utils.createFile
+import com.zain.xdetect.data.remote.utils.timeStamp
 import com.zain.xdetect.data.remote.utils.uriToFile
 import com.zain.xdetect.databinding.ActivityCameraBinding
-import java.io.File
 
 class CameraActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCameraBinding
 
     private var isDetection = true
-    private var isSkinDisease = true
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private var imageCapture: ImageCapture? = null
 
@@ -34,23 +32,21 @@ class CameraActivity : AppCompatActivity() {
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        getCondition()
+//        getCondition()
 
         setupAction()
     }
 
-    private fun getCondition() {
-        isDetection = intent.getBooleanExtra(IS_DETECTION,true)
-        isSkinDisease = intent.getBooleanExtra(IS_SKIN_DISEASE,true)
-    }
+//    private fun getCondition() {
+//        isDetection = intent.getBooleanExtra(IS_DETECTION, true)
+//        isSkinDisease = intent.getBooleanExtra(IS_SKIN_DISEASE, true)
+//    }
 
     private fun setupAction() {
         binding.apply {
             btnCamera.setOnClickListener { takePhoto() }
             btnSwitchCamera.setOnClickListener { startCamera() }
-            btnGallery.setOnClickListener{
-                startGallery()
-            }
+            btnGallery.setOnClickListener { startGallery() }
         }
     }
 
@@ -71,16 +67,15 @@ class CameraActivity : AppCompatActivity() {
                 override fun onError(exc: ImageCaptureException) {
                     Toast.makeText(
                         this@CameraActivity,
-                        "Gagal mengambil gambar.",
+                        "Gagal mengambil gambar",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val intent = Intent(this@CameraActivity,ImagePreviewActivity::class.java)
+                    val intent = Intent(this@CameraActivity, ImagePreviewActivity::class.java)
                     intent.putExtra(ImagePreviewActivity.IMAGE_PATH, photoFile.absolutePath)
-                    intent.putExtra(ImagePreviewActivity.IS_DETECTION,isDetection)
-                    intent.putExtra(ImagePreviewActivity.IS_SKIN_DISEASE,isSkinDisease)
+                    intent.putExtra(ImagePreviewActivity.IS_DETECTION, isDetection)
                     intent.putExtra(
                         "isBackCamera",
                         cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA
@@ -98,10 +93,9 @@ class CameraActivity : AppCompatActivity() {
                 val selectedImg = result.data?.data as Uri
                 selectedImg.let { uri ->
                     val imageFile = uriToFile(uri, this@CameraActivity)
-                    val intent = Intent(this@CameraActivity,ImagePreviewActivity::class.java)
+                    val intent = Intent(this@CameraActivity, ImagePreviewActivity::class.java)
                     intent.putExtra(ImagePreviewActivity.IMAGE_PATH, imageFile.absolutePath)
-                    intent.putExtra(ImagePreviewActivity.IS_DETECTION,isDetection)
-                    intent.putExtra(ImagePreviewActivity.IS_SKIN_DISEASE,isSkinDisease)
+                    intent.putExtra(ImagePreviewActivity.IS_DETECTION, isDetection)
                     startActivity(intent)
                     finish()
                 }
@@ -135,10 +129,11 @@ class CameraActivity : AppCompatActivity() {
                     preview,
                     imageCapture
                 )
+
             } catch (exc: Exception) {
                 Toast.makeText(
                     this@CameraActivity,
-                    "Gagal memunculkan kamera.",
+                    "Gagal memunculkan kamera",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -167,6 +162,5 @@ class CameraActivity : AppCompatActivity() {
 
     companion object {
         const val IS_DETECTION = "is_detection"
-        const val IS_SKIN_DISEASE = "is_skin_disease"
     }
 }

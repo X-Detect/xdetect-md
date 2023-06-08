@@ -36,4 +36,30 @@ interface ApiService {
         @Path("uid") uid: String
     ): UserResponse
 
+    @Multipart
+    @POST("user/{uid}/profile-picture")
+    suspend fun editProfilePicture(
+        @Path("uid") uid: String,
+        @Part file: MultipartBody.Part,
+    ): UserResponse
+
+    @FormUrlEncoded
+    @PUT("edit-email/{uid}")
+    suspend fun editEmailPassword(
+        @Path("uid") uid: String,
+        @Field("email") email: String,
+        @Field("password") password: String,
+        @Field("currentEmail") currentEmail: String,
+        @Field("currentPassword") currentPassword: String,
+    ): UserResponse
+
+    @FormUrlEncoded
+    @PUT("edit-name/{uid}")
+    suspend fun editName(
+        @Path("uid") uid: String,
+        @Field("name") name: String,
+        @Field("currentName") currentName: String,
+    ): UserResponse
+
+
 }

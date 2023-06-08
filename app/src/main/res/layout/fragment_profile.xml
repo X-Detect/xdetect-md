@@ -18,13 +18,14 @@
                 android:id="@+id/img_photo"
                 android:layout_width="180dp"
                 android:layout_height="180dp"
-                android:layout_marginTop="24dp"
-                android:src="@drawable/img_profile"
-                app:civ_border_color="@color/blue"
-                app:civ_border_width="2dp"
+                android:layout_marginTop="32dp"
+                android:alpha="1"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/img_profile" />
 
             <ImageButton
                 android:id="@+id/btn_iv_edit_profile"
@@ -72,9 +73,8 @@
                     android:id="@+id/et_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="false"
                     android:ems="10"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:hint="@string/sample_name"
                     android:inputType="text" />
 
@@ -114,9 +114,8 @@
                     android:id="@+id/et_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="false"
                     android:ems="10"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:hint="@string/sample_phone"
                     android:inputType="text" />
 
@@ -156,10 +155,9 @@
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="false"
                     android:cursorVisible="false"
                     android:ems="10"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:hint="@string/sample_email"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -199,14 +197,57 @@
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="false"
                     android:cursorVisible="false"
                     android:ems="10"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:inputType="textPassword"
                     android:text="@string/sample_password"
                     app:passwordToggleEnabled="false" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_new_password_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:visibility="invisible"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_new_password"
+                app:passwordToggleEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_new_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:hint="@string/new_password"
+                    android:inputType="textPassword"
+                    app:passwordToggleEnabled="false" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_new_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/new_password"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_password_layout" />
 
             <Button
                 android:id="@+id/btn_logout"
@@ -226,6 +267,43 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/et_password_layout" />
+
+            <Button
+                android:id="@+id/btn_save_changes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="88dp"
+                android:paddingHorizontal="60dp"
+                android:background="@drawable/rounded_corner_10_blue"
+                android:text="@string/save_changes"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_new_password_layout" />
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:paddingHorizontal="48dp"
+                android:background="@drawable/rounded_corner_10_blue"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/btn_save_changes"
+                app:layout_constraintStart_toEndOf="@id/btn_save_changes"
+                app:layout_constraintTop_toTopOf="@id/btn_save_changes" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

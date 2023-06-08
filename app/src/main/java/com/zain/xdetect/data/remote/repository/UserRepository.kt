@@ -7,7 +7,12 @@ import com.zain.xdetect.data.local.model.Result
 import com.zain.xdetect.data.local.preference.UserPreference
 import com.zain.xdetect.data.remote.api.ApiService
 import com.zain.xdetect.data.remote.model.auth.DataUser
+import com.zain.xdetect.data.remote.utils.reduceFileImage
 import kotlinx.coroutines.flow.emitAll
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 class UserRepository private constructor(
     private val userApiService: ApiService,
@@ -70,6 +75,70 @@ class UserRepository private constructor(
             emit(Result.Error(e.message.toString()))
         }
 
+    }
+
+    fun editEmailPassword(
+        token: String,
+        currentEmail: String,
+        newEmail: String,
+        currentPassword: String,
+        newPassword: String
+    ): Flow<Result<String>> = flow {
+        emit(Result.Loading)
+        try {
+            val response = userApiService.editEmailPassword(
+                uid = token,
+                email = newEmail,
+                password = newPassword,
+                currentEmail = currentEmail,
+                currentPassword = currentPassword
+            )
+            emit(Result.Success(response.message!!))
+
+        } catch (e: Exception) {
+            Log.d("UserRepository", "editEmailPassword: ${e.message.toString()}")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun editName(
+        uid: String,
+        newName: String,
+        currentName: String,
+    ): Flow<Result<String>> = flow {
+        emit(Result.Loading)
+        try {
+            val response = userApiService.editName(
+                uid = uid,
+                name = newName,
+                currentName = currentName
+            )
+            emit(Result.Success(response.message!!))
+
+        } catch (e: Exception) {
+            Log.d("UserRepository", "editEmailPassword: ${e.message.toString()}")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun editProfilePicture(
+        uid: String, imageFile: File
+    ): Flow<Result<String>> = flow {
+        emit(Result.Loading)
+        try {
+            val reducedFile = reduceFileImage(imageFile)
+            val requestImageFile = reducedFile.asRequestBody("image/jpeg".toMediaType())
+            val imageMultipart: MultipartBody.Part =
+                MultipartBody.Part.createFormData("file", imageFile.name, requestImageFile)
+            val response = userApiService.editProfilePicture(
+                uid, imageMultipart
+            )
+            emit(Result.Success(response.message!!))
+
+        } catch (e: Exception) {
+            Log.d("UserRepository", "editProfilePicture: ${e.message.toString()}")
+            emit(Result.Error(e.message.toString()))
+        }
     }
 
     companion object {
