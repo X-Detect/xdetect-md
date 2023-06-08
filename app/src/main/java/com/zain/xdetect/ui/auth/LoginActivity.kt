@@ -44,10 +44,10 @@ class LoginActivity : AppCompatActivity() {
             )
         }
         binding.btnLogin.setOnClickListener {
-            val name = binding.etUsername.text.toString()
+            val email = binding.etUsername.text.toString()
             val password = binding.etPassword.text.toString()
             when {
-                name.isEmpty() -> {
+                email.isEmpty() -> {
                     binding.etUsernameLayout.error = "Masukkan username"
                 }
                 password.isEmpty() -> {
@@ -58,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
                         etUsername.onEditorAction(EditorInfo.IME_ACTION_DONE)
                         etPassword.onEditorAction(EditorInfo.IME_ACTION_DONE)
                     }
-                    authViewModel.login(name, password).observe(this) { result ->
+                    authViewModel.login(email, password).observe(this) { result ->
                         when (result) {
                             is Result.Loading -> {
                                 binding.progressBar.visibility = View.VISIBLE

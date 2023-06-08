@@ -13,4 +13,7 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
         userRepository.register(email, password, name, phone).asLiveData()
 
     fun logout() = userRepository.logout().asLiveData()
+
+    fun getDataUser(token:String) = userRepository.getDataUser(token).asLiveData()
+
 }
