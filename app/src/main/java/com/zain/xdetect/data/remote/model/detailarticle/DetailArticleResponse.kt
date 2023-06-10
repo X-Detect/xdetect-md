@@ -7,9 +7,9 @@ data class DetailArticleResponse(
 	@field:SerializedName("data")
 	val data: DataDetailArticle,
 
-	@field:SerializedName("message")
-	val message: String,
+	@field:SerializedName("msg")
+	val msg: String,
 
-	@field:SerializedName("status")
-	val status: String
+	@field:SerializedName("success")
+	val success: String
 )

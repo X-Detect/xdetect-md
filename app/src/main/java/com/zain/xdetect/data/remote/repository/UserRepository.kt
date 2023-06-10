@@ -23,13 +23,13 @@ class UserRepository private constructor(
     fun login(email: String, password: String): Flow<Result<String>> = flow {
         emit(Result.Loading)
         try {
-            Log.d("LOGIN", "login: $userApiService ${email} ${password}")
+            Log.d("LOGIN", "login: ${email} ${password}")
             val response = userApiService.login(email, password)
             Log.d("LOGIN 2", "login 2: ${response}")
             val token = response.data?.uid
             Log.d("LOGIN 3", "login 3: ${token}")
             userPreference.saveToken(token!!)
-            emit(Result.Success(response.message))
+            emit(Result.Success(response.msg))
 
         } catch (e: Exception) {
             Log.d("UserRepository", "loginnn: ${e.message.toString()}")
@@ -50,7 +50,7 @@ class UserRepository private constructor(
             val response = userApiService.register(email, password, name, phone)
             val token = response.data?.uid
             userPreference.saveToken(token!!)
-            emit(Result.Success(response.message))
+            emit(Result.Success(response.msg))
         } catch (e: Exception) {
             Log.d("UserRepository", "register: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))

@@ -29,7 +29,7 @@ class ArticleViewModel : ViewModel() {
 
     fun getListArticle() {
         _isLoading.value = true
-        val client = ApiConfig.getArticleApiService().getAllArticle()
+        val client = ApiConfig.getApiService().getAllArticle()
         client.enqueue(object : Callback<ArticleResponse> {
             override fun onResponse(
                 call: Call<ArticleResponse>,
@@ -57,7 +57,7 @@ class ArticleViewModel : ViewModel() {
 
     fun getDetailArticle(id: String) {
         _isLoading.value = true
-        val client = ApiConfig.getArticleApiService().getDetailArticle(id = id)
+        val client = ApiConfig.getApiService().getDetailArticle(id = id)
         client.enqueue(object : Callback<DetailArticleResponse> {
             override fun onResponse(
                 call: Call<DetailArticleResponse>,

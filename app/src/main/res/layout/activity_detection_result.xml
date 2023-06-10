@@ -10,7 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/my_toolbar" />
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img_result"
             android:layout_width="match_parent"
             android:layout_height="300dp"
@@ -23,13 +27,14 @@
             android:src="@drawable/img_xray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <TextView
             android:id="@+id/tv_detection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/img_result"
@@ -37,29 +42,56 @@
             app:layout_constraintTop_toBottomOf="@id/img_result"
             tools:text="@string/pneumoninia" />
 
+
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/img_result"
-            app:layout_constraintTop_toBottomOf="@id/tv_detection"
+            app:layout_constraintTop_toTopOf="@id/tv_title_accuracy"
             tools:text="@string/date_dummy" />
 
         <TextView
-            android:id="@+id/tv_title_result"
+            android:id="@+id/tv_title_accuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:gravity="end"
+            android:text="@string/accuracy"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_detection" />
+
+        <TextView
+            android:id="@+id/tv_desc_accuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/acc_percent"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/tv_title_accuracy"
+            app:layout_constraintTop_toTopOf="@id/tv_title_accuracy" />
+
+        <TextView
+            android:id="@+id/tv_title_desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="16dp"
+            android:text="Dekripsi"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_date"
-            tools:text="@string/penjelasan" />
+            app:layout_constraintTop_toBottomOf="@id/tv_date" />
+
 
         <TextView
             android:id="@+id/tv_desc_result"
@@ -69,25 +101,27 @@
             android:layout_marginTop="8dp"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_result"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_desc"
             tools:text="@string/lorem_ipsum2" />
 
         <TextView
-            android:id="@+id/tv_title_saran"
+            android:id="@+id/tv_title_symptoms"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="16dp"
+            android:text="@string/gejala"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_desc_result"
-            tools:text="@string/saran" />
+            app:layout_constraintTop_toBottomOf="@id/tv_desc_result" />
 
         <TextView
-            android:id="@+id/tv_desc_saran"
+            android:id="@+id/tv_desc_symptoms"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
@@ -95,7 +129,102 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_saran"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_symptoms"
+            tools:text="@string/lorem_ipsum2" />
+
+        <TextView
+            android:id="@+id/tv_title_step"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/next_step"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_desc_symptoms" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_step"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:layout_marginHorizontal="24dp"
+            android:scrollbarSize="2dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_title_recommendation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_step"
+            tools:listitem="@layout/item_points" />
+
+        <TextView
+            android:id="@+id/tv_title_recommendation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/saran"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_step" />
+
+        <TextView
+            android:id="@+id/tv_title_action"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/aksi"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_recommendation" />
+
+        <TextView
+            android:id="@+id/tv_desc_action"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_action"
+            tools:text="@string/lorem_ipsum2" />
+
+        <TextView
+            android:id="@+id/tv_title_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/pesan"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_desc_action" />
+
+        <TextView
+            android:id="@+id/tv_desc_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_message"
             tools:text="@string/lorem_ipsum2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

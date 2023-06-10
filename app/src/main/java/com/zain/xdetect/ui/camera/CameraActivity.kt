@@ -32,15 +32,14 @@ class CameraActivity : AppCompatActivity() {
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        getCondition()
+        getCondition()
 
         setupAction()
     }
 
-//    private fun getCondition() {
-//        isDetection = intent.getBooleanExtra(IS_DETECTION, true)
-//        isSkinDisease = intent.getBooleanExtra(IS_SKIN_DISEASE, true)
-//    }
+    private fun getCondition() {
+        isDetection = intent.getBooleanExtra(IS_DETECTION, true)
+    }
 
     private fun setupAction() {
         binding.apply {

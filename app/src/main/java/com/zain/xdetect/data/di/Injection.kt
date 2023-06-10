@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.zain.xdetect.data.local.preference.UserPreference
 import com.zain.xdetect.data.remote.api.ApiConfig
+import com.zain.xdetect.data.remote.repository.DetectionRepository
 import com.zain.xdetect.data.remote.repository.UserRepository
 
 
@@ -13,6 +14,11 @@ object Injection {
         val userApiService = ApiConfig.getApiService()
         val authPreferences = UserPreference.getInstance(dataStore)
         return UserRepository.getInstance(userApiService, authPreferences)
+    }
+
+    fun provideDetectionRepository(): DetectionRepository {
+        val apiService = ApiConfig.getDetectionApiService()
+        return DetectionRepository.getInstance(apiService)
     }
 
 //    fun provideStoryRepository(

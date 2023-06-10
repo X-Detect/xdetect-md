@@ -3,13 +3,13 @@ package com.zain.xdetect.ui.camera
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -19,6 +19,8 @@ import com.zain.xdetect.databinding.ActivityImagePreviewBinding
 import com.zain.xdetect.ui.auth.AuthViewModel
 import com.zain.xdetect.ui.auth.AuthViewModelFactory
 import com.zain.xdetect.ui.detection.DetectionResultActivity
+import com.zain.xdetect.ui.detection.DetectionViewModel
+import com.zain.xdetect.ui.detection.DetectionViewModelFactory
 import java.io.File
 
 class ImagePreviewActivity : AppCompatActivity() {
@@ -36,9 +38,9 @@ class ImagePreviewActivity : AppCompatActivity() {
         AuthViewModelFactory.getInstance(dataStore)
     }
 
-//    private val detectionViewModel: DetectionViewModel by viewModels {
-//        DetectionViewModelFactory.getInstance()
-//    }
+    private val detectionViewModel: DetectionViewModel by viewModels {
+        DetectionViewModelFactory.getInstance()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,64 +61,62 @@ class ImagePreviewActivity : AppCompatActivity() {
     }
 
     private fun getCondition() {
-        isDetection = intent.getBooleanExtra(IS_DETECTION, true)
+        isDetection = intent.getBooleanExtra(IS_DETECTION, false)
     }
 
     private fun setAction() {
         binding.btnUpload.setOnClickListener {
             if (isDetection) {
-                uploadProfilePicture()
-//                postDetection(isSkinDisease)
-
+                postDetection()
             } else {
                 uploadProfilePicture()
             }
         }
     }
 
-//    private fun postDetection(isSkinDisease: Boolean) {
-//        if (!uid.isNullOrEmpty())
-//            if (isSkinDisease) {
-//                detectionViewModel.postDetectionDisease(uid!!, imageFile!!)
-//                    .observe(this) { result ->
-//                        when (result) {
-//                            is Result.Loading -> {
-//                                binding.progressBar.visibility = View.VISIBLE
-//                            }
-//                            is Result.Success -> {
-//                                binding.progressBar.visibility = View.GONE
-//                                val dataResult = result.data
-//                                val intent = Intent(
-//                                    this@ImagePreviewActivity,
-//                                    DetectionResultActivity::class.java
-//                                )
-//                                intent.putExtra(
-//                                    DetectionResultActivity.DETECTION_RESULT,
-//                                    dataResult
-//                                )
-//                                startActivity(intent)
-//                                finish()
-//                            }
-//                            is Result.Error -> {
-//                                binding.progressBar.visibility = View.GONE
-//                                Toast.makeText(
-//                                    this,
-//                                    "Failed to detect disease",
-//                                    Toast.LENGTH_SHORT
-//                                ).show()
-//
-//                            }
-//                        }
-//                    }
-//            } else
-//                Toast.makeText(
-//                    this,
-//                    "Failed to obtain user authentication",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//
-//
-//    }
+    private fun postDetection() {
+        if (!uid.isNullOrEmpty())
+
+            detectionViewModel.postDetectionDisease(uid!!, imageFile!!)
+                .observe(this) { result ->
+                    when (result) {
+                        is Result.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
+                        is Result.Success -> {
+                            binding.progressBar.visibility = View.GONE
+                            val dataResult = result.data
+                            val intent = Intent(
+                                this@ImagePreviewActivity,
+                                DetectionResultActivity::class.java
+                            )
+                            intent.putExtra(
+                                DetectionResultActivity.DETECTION_RESULT,
+                                dataResult
+                            )
+                            startActivity(intent)
+                            finish()
+                        }
+                        is Result.Error -> {
+                            binding.progressBar.visibility = View.GONE
+                            Toast.makeText(
+                                this,
+                                "Failed to detect disease",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        }
+                    }
+
+                } else
+            Toast.makeText(
+                this,
+                "Failed to obtain user authentication",
+                Toast.LENGTH_SHORT
+            ).show()
+
+
+    }
 
     private fun uploadProfilePicture() {
         if (!uid.isNullOrEmpty())

@@ -61,4 +61,11 @@
     <string name="cancel">Cancel</string>
     <string name="msg_failed_changes_name">Gagal melakukan perubahan pada nama</string>
     <string name="msg_failed_changes">Gagal melakukan perubahan</string>
+    <string name="gejala">Gejala</string>
+    <string name="aksi">Aksi</string>
+    <string name="pesan">Pesan</string>
+    <string name="dengan_akurasi">Dengan Akurasi</string>
+    <string name="acc_percent">%1$s\%</string>
+    <string name="next_step">Tindakan Selanjutnya</string>
+    <string name="accuracy">Akurasi</string>
 </resources>

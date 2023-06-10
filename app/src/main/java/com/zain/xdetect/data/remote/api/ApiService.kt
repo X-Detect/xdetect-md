@@ -1,7 +1,9 @@
 package com.zain.xdetect.data.remote.api
 
+import com.zain.xdetect.data.remote.model.article.ArticleResponse
 import com.zain.xdetect.data.remote.model.auth.AuthResponse
 import com.zain.xdetect.data.remote.model.auth.UserResponse
+import com.zain.xdetect.data.remote.model.detailarticle.DetailArticleResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -9,7 +11,7 @@ import retrofit2.http.*
 interface ApiService {
 
     @FormUrlEncoded
-    @POST("sign-up")
+    @POST("signup")
     suspend fun register(
         @Field("email") email: String,
         @Field("password") password: String,
@@ -18,7 +20,7 @@ interface ApiService {
     ): AuthResponse
 
     @FormUrlEncoded
-    @POST("sign-in")
+    @POST("signin")
     suspend fun login(
         @Field("email") email: String,
         @Field("password") password: String
@@ -61,5 +63,12 @@ interface ApiService {
         @Field("currentName") currentName: String,
     ): UserResponse
 
+    @GET("article")
+    fun getAllArticle():Call<ArticleResponse>
+
+    @GET("article/{id}")
+    fun getDetailArticle(
+        @Path("id") id:String
+    ):Call<DetailArticleResponse>
 
 }
