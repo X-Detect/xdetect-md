@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class DataDetailArticle(
 
-    @field:SerializedName("imageUrl")
+    @field:SerializedName("imageURL")
     val imageUrl: String,
 
     @field:SerializedName("description")
