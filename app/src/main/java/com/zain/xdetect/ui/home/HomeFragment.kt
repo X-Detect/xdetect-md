@@ -98,7 +98,12 @@ class HomeFragment : Fragment() {
 
     private fun setDataUserView(dataUser: DataUser) {
         val defaultImg = "https://i.pinimg.com/564x/8e/e3/51/8ee351b4914b264f69e748a9df1f2541.jpg"
-        val shownImgUrl = dataUser.imgUrl ?: defaultImg
+        var shownImgUrl = ""
+        if (dataUser.imgUrl == ""){
+            shownImgUrl = defaultImg
+        }else{
+            shownImgUrl = dataUser.imgUrl.toString()
+        }
         binding.apply {
             tvGreetName.text = dataUser.name
             Glide.with(requireActivity())

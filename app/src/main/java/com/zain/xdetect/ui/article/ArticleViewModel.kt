@@ -68,7 +68,7 @@ class ArticleViewModel : ViewModel() {
                     if (responseBody != null) {
                         _detailArticle.value = responseBody.data!!
                     }
-                    Log.i(TAG, "OKAYU DETAIL $_detailArticle")
+                    Log.i(TAG, "OKAYY DETAIL $_detailArticle")
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }

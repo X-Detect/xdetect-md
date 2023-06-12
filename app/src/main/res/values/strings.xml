@@ -65,7 +65,9 @@
     <string name="aksi">Aksi</string>
     <string name="pesan">Pesan</string>
     <string name="dengan_akurasi">Dengan Akurasi</string>
-    <string name="acc_percent">%1$s\%</string>
+    <string name="acc_percent">75%</string>
     <string name="next_step">Tindakan Selanjutnya</string>
     <string name="accuracy">Akurasi</string>
+    <string name="source_title">Source</string>
+    <string name="sample_source">www.halodoc.com/artikel/</string>
 </resources>

@@ -57,7 +57,7 @@ class DetailArticleActivity : AppCompatActivity(), View.OnClickListener {
     private fun setDataArticle(detailArticle: DataDetailArticle) {
         binding.apply {
             Glide.with(root)
-                .load(detailArticle.imageUrl)
+                .load(detailArticle.imageURL)
                 .into(imgArticle)
             tvTitleArticle.text = detailArticle.title
 

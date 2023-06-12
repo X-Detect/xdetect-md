@@ -33,7 +33,7 @@ interface ApiService {
 //        @Field("password") password: String
 //    ): AuthResponse
 
-    @GET("user/{uid}")
+    @GET("users/{uid}")
     suspend fun getDataUser(
         @Path("uid") uid: String
     ): UserResponse

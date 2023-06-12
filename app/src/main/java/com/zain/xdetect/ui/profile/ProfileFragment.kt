@@ -67,12 +67,12 @@ class ProfileFragment : Fragment() {
 
         authViewModel.isLogin().observe(requireActivity()) { uid ->
             if (uid.isNullOrEmpty()) {
-                Log.i("PROFILE", "OKAYUU GA GET DATA")
+                Log.i("PROFILE", "OKAYYU GA GET DATA")
                 navigateToLogin()
             } else {
                 this.uid = uid.toString()
-                Log.i("PROFILE", "OKAYUU GETDATA $uid")
-                Log.i("PROFILE", "OKAYUU $isAdded")
+                Log.i("PROFILE", "OKAYYU GETDATA $uid")
+                Log.i("PROFILE", "OKAYYU $isAdded")
                 if (isAdded)
                     getDataUser(uid)
             }
@@ -109,7 +109,12 @@ class ProfileFragment : Fragment() {
     private fun setDataUserView(dataUser: DataUser) {
         Log.i("SETDATAUSER", "OKAY ${dataUser.imgUrl}")
         val defaultImg = "https://i.pinimg.com/564x/8e/e3/51/8ee351b4914b264f69e748a9df1f2541.jpg"
-        val shownImgUrl = dataUser.imgUrl ?: defaultImg
+        var shownImgUrl = ""
+        if (dataUser.imgUrl == ""){
+            shownImgUrl = defaultImg
+        }else{
+            shownImgUrl = dataUser.imgUrl.toString()
+        }
         binding.apply {
             etName.setText(dataUser.name)
             etEmail.setText(dataUser.email)
@@ -327,7 +332,7 @@ class ProfileFragment : Fragment() {
             }
         }
     }
-    
+
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED

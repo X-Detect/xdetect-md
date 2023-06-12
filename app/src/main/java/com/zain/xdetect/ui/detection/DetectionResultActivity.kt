@@ -1,7 +1,6 @@
 package com.zain.xdetect.ui.detection
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,9 +38,9 @@ class DetectionResultActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setDataResultView(dataResult: DetectionResponse) {
+//        Log.i("OKAYY", dataResult.toString())
         val listSymptoms = dataResult.additionalInfo.symptoms
         val symptomsText = listSymptoms.joinToString(", ")
-        Log.i("SIUUU", "${dataResult.additionalInfo.nextSteps}")
 
         val adapter = ListPointsAdapter(dataResult.additionalInfo.nextSteps)
 
@@ -60,7 +59,6 @@ class DetectionResultActivity : AppCompatActivity(), View.OnClickListener {
             tvDetection.text = dataResult.maxLabel.label
             tvDate.text = dataResult.created
         }
-
     }
 
     override fun onClick(v: View) {
