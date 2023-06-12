@@ -26,13 +26,6 @@ interface ApiService {
         @Field("password") password: String
     ): AuthResponse
 
-//    @FormUrlEncoded
-//    @POST("signin")
-//    suspend fun login(
-//        @Field("name") name: String,
-//        @Field("password") password: String
-//    ): AuthResponse
-
     @GET("users/{uid}")
     suspend fun getDataUser(
         @Path("uid") uid: String
@@ -64,11 +57,12 @@ interface ApiService {
     ): UserResponse
 
     @GET("article")
-    fun getAllArticle():Call<ArticleResponse>
+    suspend fun getAllArticle(): ArticleResponse
 
     @GET("article/{id}")
-    fun getDetailArticle(
-        @Path("id") id:String
-    ):Call<DetailArticleResponse>
+    suspend fun getDetailArticle(
+        @Path("id") id: String
+    ): DetailArticleResponse
+
 
 }

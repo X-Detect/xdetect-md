@@ -28,8 +28,6 @@ class ApiConfig {
                 .addInterceptor(authInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-//                .baseUrl("https://test-api-skin-akdfifaocq-et.a.run.app")
-//                .baseUrl("https://xdetect-capstone.et.r.appspot.com/")
                 .baseUrl("https://xdetect-api-firebase-akdfifaocq-et.a.run.app")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
