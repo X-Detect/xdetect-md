@@ -57,6 +57,8 @@
     <string name="username">Username</string>
     <string name="allow_permission">Mohon izinkan akses kamera untuk menggunakan fitur</string>
     <string name="new_password">New Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="sample_star_password">********</string>
     <string name="save_changes">Save</string>
     <string name="cancel">Cancel</string>
     <string name="msg_failed_changes_name">Gagal melakukan perubahan pada nama</string>

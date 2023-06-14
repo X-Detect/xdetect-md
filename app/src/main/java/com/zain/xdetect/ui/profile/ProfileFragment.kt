@@ -303,6 +303,7 @@ class ProfileFragment : Fragment() {
             etPassword.setText("")
             etNewPassword.setText("")
             if (isEditing) {
+                binding.etPassword.hint = getString(R.string.current_password)
                 binding.btnIvEditProfile.visibility = View.GONE
                 imgPhoto.alpha = 0.7f
                 binding.btnLogout.visibility = View.GONE
@@ -313,6 +314,7 @@ class ProfileFragment : Fragment() {
                 binding.etPasswordLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
                 binding.etNewPasswordLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
             } else {
+                binding.etPassword.hint = getString(R.string.sample_star_password)
                 binding.btnIvEditProfile.visibility = View.VISIBLE
                 imgPhoto.alpha = 1f
                 binding.btnLogout.visibility = View.VISIBLE

@@ -26,6 +26,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:gravity="center"
+        android:textColor="@color/black"
         android:text="@string/onboard_description1"
         android:textSize="20sp"
         android:textStyle="bold"
