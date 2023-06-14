@@ -5,7 +5,7 @@ import com.zain.xdetect.data.remote.model.auth.AuthResponse
 import com.zain.xdetect.data.remote.model.auth.UserResponse
 import com.zain.xdetect.data.remote.model.detailarticle.DetailArticleResponse
 import okhttp3.MultipartBody
-import retrofit2.Call
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ApiService {
@@ -26,17 +26,32 @@ interface ApiService {
         @Field("password") password: String
     ): AuthResponse
 
+    @FormUrlEncoded
+    @POST("reset-password")
+    suspend fun reset(
+        @Field("email") email: String
+    ): AuthResponse
+
     @GET("users/{uid}")
     suspend fun getDataUser(
         @Path("uid") uid: String
     ): UserResponse
 
     @Multipart
-    @POST("user/{uid}/profile-picture")
+    @PUT("upload/{uid}")
     suspend fun editProfilePicture(
         @Path("uid") uid: String,
-        @Part file: MultipartBody.Part,
+        @Part image: MultipartBody.Part,
+        @Part("uid") uidPart: RequestBody
     ): UserResponse
+
+    @GET("article")
+    suspend fun getAllArticle(): ArticleResponse
+
+    @GET("article/{id}")
+    suspend fun getDetailArticle(
+        @Path("id") id: String
+    ): DetailArticleResponse
 
     @FormUrlEncoded
     @PUT("edit-email/{uid}")
@@ -55,14 +70,4 @@ interface ApiService {
         @Field("name") name: String,
         @Field("currentName") currentName: String,
     ): UserResponse
-
-    @GET("article")
-    suspend fun getAllArticle(): ArticleResponse
-
-    @GET("article/{id}")
-    suspend fun getDetailArticle(
-        @Path("id") id: String
-    ): DetailArticleResponse
-
-
 }

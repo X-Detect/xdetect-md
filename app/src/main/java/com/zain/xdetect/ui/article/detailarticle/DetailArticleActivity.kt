@@ -68,7 +68,6 @@ class DetailArticleActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-
     private fun setToolbar() {
         binding.myToolbar.btnBackToolbar.setOnClickListener(this)
         binding.myToolbar.tvToolbarTitle.text = "Article Detail"
@@ -80,6 +79,7 @@ class DetailArticleActivity : AppCompatActivity(), View.OnClickListener {
                 .load(detailArticle.imageURL)
                 .into(imgArticle)
             tvProfile.text = detailArticle.createdBy
+            tvDateArticle.text = detailArticle.createdAt
             tvTitleArticle.text = detailArticle.title
 
             tvDescArticle.text = Html.fromHtml(detailArticle.content, Html.FROM_HTML_MODE_COMPACT)

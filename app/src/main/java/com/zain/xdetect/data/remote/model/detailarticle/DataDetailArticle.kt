@@ -19,8 +19,8 @@ data class DataDetailArticle(
     @field:SerializedName("sourceURL")
     val sourceURL: String,
 
-//    @field:SerializedName("createdAt")
-//    val createdAt: String,
+    @field:SerializedName("createdAt")
+    val createdAt: String,
 
     @field:SerializedName("content")
     val content: String

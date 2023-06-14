@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -22,7 +20,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.textfield.TextInputLayout
 import com.zain.xdetect.R
 import com.zain.xdetect.databinding.FragmentProfileBinding
@@ -30,9 +27,6 @@ import com.zain.xdetect.ui.auth.AuthViewModel
 import com.zain.xdetect.ui.auth.AuthViewModelFactory
 import com.zain.xdetect.data.local.model.Result
 import com.zain.xdetect.data.remote.model.auth.DataUser
-import com.zain.xdetect.ui.auth.RegisterActivity
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import com.zain.xdetect.ui.auth.LoginActivity
 import com.zain.xdetect.ui.camera.CameraActivity
 
@@ -103,17 +97,16 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
-
     }
 
     private fun setDataUserView(dataUser: DataUser) {
-        Log.i("SETDATAUSER", "OKAY ${dataUser.imgUrl}")
+        Log.i("SETDATAUSER", "OKAY ${dataUser.profilePicture}")
         val defaultImg = "https://i.pinimg.com/564x/8e/e3/51/8ee351b4914b264f69e748a9df1f2541.jpg"
-        var shownImgUrl = ""
-        if (dataUser.imgUrl == ""){
+        val shownImgUrl: String
+        if (dataUser.profilePicture == "") {
             shownImgUrl = defaultImg
-        }else{
-            shownImgUrl = dataUser.imgUrl.toString()
+        } else {
+            shownImgUrl = dataUser.profilePicture.toString()
         }
         binding.apply {
             etName.setText(dataUser.name)

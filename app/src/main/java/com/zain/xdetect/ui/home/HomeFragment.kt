@@ -24,6 +24,7 @@ import com.zain.xdetect.data.remote.model.auth.DataUser
 import com.zain.xdetect.databinding.FragmentHomeBinding
 import com.zain.xdetect.ui.auth.AuthViewModel
 import com.zain.xdetect.ui.auth.AuthViewModelFactory
+import com.zain.xdetect.ui.auth.LoginActivity
 import com.zain.xdetect.ui.auth.RegisterActivity
 import com.zain.xdetect.ui.camera.CameraActivity
 
@@ -98,11 +99,11 @@ class HomeFragment : Fragment() {
 
     private fun setDataUserView(dataUser: DataUser) {
         val defaultImg = "https://i.pinimg.com/564x/8e/e3/51/8ee351b4914b264f69e748a9df1f2541.jpg"
-        var shownImgUrl = ""
-        if (dataUser.imgUrl == ""){
+        val shownImgUrl: String
+        if (dataUser.profilePicture == ""){
             shownImgUrl = defaultImg
         }else{
-            shownImgUrl = dataUser.imgUrl.toString()
+            shownImgUrl = dataUser.profilePicture.toString()
         }
         binding.apply {
             tvGreetName.text = dataUser.name
@@ -120,7 +121,7 @@ class HomeFragment : Fragment() {
             getString(R.string.logout),
             Toast.LENGTH_SHORT
         ).show()
-        startActivity(Intent(requireActivity(), RegisterActivity::class.java))
+        startActivity(Intent(requireActivity(), LoginActivity::class.java))
         activity?.finish()
     }
 

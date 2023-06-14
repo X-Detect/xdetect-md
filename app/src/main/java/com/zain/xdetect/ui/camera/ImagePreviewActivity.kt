@@ -29,7 +29,6 @@ class ImagePreviewActivity : AppCompatActivity() {
     private var uid: String? = null
 
     private var isDetection = true
-    private var isSkinDisease = true
     private var imageFile: File? = null
 
     private lateinit var binding: ActivityImagePreviewBinding
@@ -76,7 +75,6 @@ class ImagePreviewActivity : AppCompatActivity() {
 
     private fun postDetection() {
         if (!uid.isNullOrEmpty())
-
             detectionViewModel.postDetectionDisease(uid!!, imageFile!!)
                 .observe(this) { result ->
                     when (result) {
@@ -107,15 +105,12 @@ class ImagePreviewActivity : AppCompatActivity() {
 
                         }
                     }
-
                 } else
             Toast.makeText(
                 this,
                 "Failed to obtain user authentication",
                 Toast.LENGTH_SHORT
             ).show()
-
-
     }
 
     private fun uploadProfilePicture() {
@@ -155,7 +150,6 @@ class ImagePreviewActivity : AppCompatActivity() {
                         "Failed to update profile picture",
                         Toast.LENGTH_SHORT
                     ).show()
-
                 }
             }
         }

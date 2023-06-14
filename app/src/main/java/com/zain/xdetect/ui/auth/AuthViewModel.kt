@@ -13,9 +13,11 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
     fun register(email: String, password: String, name: String, phone: String) =
         userRepository.register(email, password, name, phone).asLiveData()
 
+    fun reset(email: String) = userRepository.reset(email).asLiveData()
+
     fun logout() = userRepository.logout().asLiveData()
 
-    fun getDataUser(token:String) = userRepository.getDataUser(token).asLiveData()
+    fun getDataUser(token: String) = userRepository.getDataUser(token).asLiveData()
 
     fun editEmailPassword(
         token: String,
@@ -23,16 +25,21 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
         newEmail: String,
         currentPassword: String,
         newPassword: String
-    ) = userRepository.editEmailPassword(token,currentEmail,newEmail,currentPassword,newPassword).asLiveData()
+    ) = userRepository.editEmailPassword(
+        token,
+        currentEmail,
+        newEmail,
+        currentPassword,
+        newPassword
+    ).asLiveData()
 
     fun editName(
         token: String,
         newName: String,
         currentName: String,
-    ) = userRepository.editName(token,newName,currentName).asLiveData()
+    ) = userRepository.editName(token, newName, currentName).asLiveData()
 
     fun editProfilePicture(
         uid: String, imageFile: File
-    ) = userRepository.editProfilePicture(uid,imageFile).asLiveData()
-
+    ) = userRepository.editProfilePicture(uid, imageFile).asLiveData()
 }

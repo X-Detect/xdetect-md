@@ -1,18 +1,21 @@
 package com.zain.xdetect.data.remote.repository
 
 import android.util.Log
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import com.zain.xdetect.data.local.model.Result
 import com.zain.xdetect.data.local.preference.UserPreference
 import com.zain.xdetect.data.remote.api.ApiService
 import com.zain.xdetect.data.remote.model.auth.DataUser
 import com.zain.xdetect.data.remote.utils.reduceFileImage
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+
 
 class UserRepository private constructor(
     private val userApiService: ApiService,
@@ -23,11 +26,11 @@ class UserRepository private constructor(
     fun login(email: String, password: String): Flow<Result<String>> = flow {
         emit(Result.Loading)
         try {
-            Log.d("LOGIN", "login: ${email} ${password}")
+            Log.d("LOGIN", "login: $email $password")
             val response = userApiService.login(email, password)
-            Log.d("LOGIN 2", "login 2: ${response}")
+            Log.d("LOGIN 2", "login 2: $response")
             val token = response.data?.uid
-            Log.d("LOGIN 3", "login 3: ${token}")
+            Log.d("LOGIN 3", "login 3: $token")
             userPreference.saveToken(token!!)
             emit(Result.Success(response.msg))
 
@@ -46,13 +49,23 @@ class UserRepository private constructor(
         emit(Result.Loading)
 
         try {
-            Log.d("register", "Register: ${email} pass ${password} name ${name} phone ${phone}")
+            Log.d("register", "Register: $email pass $password name $name phone $phone")
             val response = userApiService.register(email, password, name, phone)
-            val token = response.data?.uid
-            userPreference.saveToken(token!!)
             emit(Result.Success(response.msg))
         } catch (e: Exception) {
             Log.d("UserRepository", "register: ${e.message.toString()}")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+
+    fun reset(email: String): Flow<Result<String>> = flow {
+        emit(Result.Loading)
+        try {
+            val response = userApiService.reset(email)
+            emit(Result.Success(response.msg))
+        } catch (e: Exception) {
+            Log.d("UserRepository", "reset: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -129,10 +142,11 @@ class UserRepository private constructor(
             val reducedFile = reduceFileImage(imageFile)
             val requestImageFile = reducedFile.asRequestBody("image/jpeg".toMediaType())
             val imageMultipart: MultipartBody.Part =
-                MultipartBody.Part.createFormData("file", imageFile.name, requestImageFile)
-            val response = userApiService.editProfilePicture(
-                uid, imageMultipart
-            )
+                MultipartBody.Part.createFormData("image", imageFile.name, requestImageFile)
+
+            val uidPart = uid.toRequestBody("text/plain".toMediaTypeOrNull())
+
+            val response = userApiService.editProfilePicture(uid, imageMultipart, uidPart)
             emit(Result.Success(response.message!!))
 
         } catch (e: Exception) {

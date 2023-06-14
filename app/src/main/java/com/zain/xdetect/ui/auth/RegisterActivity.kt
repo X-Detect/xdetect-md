@@ -1,7 +1,5 @@
 package com.zain.xdetect.ui.auth
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -93,7 +91,7 @@ class RegisterActivity : AppCompatActivity() {
                             is Result.Error -> {
                                 binding.progressBar.visibility = View.GONE
                                 Toast.makeText(
-                                    this@RegisterActivity, result.error, Toast.LENGTH_SHORT
+                                    this@RegisterActivity, "Email sudah terdaftar", Toast.LENGTH_SHORT
                                 ).show()
                             }
                         }
@@ -109,16 +107,6 @@ class RegisterActivity : AppCompatActivity() {
                             .toBundle()
                     )
                     finish()
-//                    signupViewModel.saveUser(UserModel(name, email, password, false))
-//                    AlertDialog.Builder(this).apply {
-//                        setTitle("Berhasil!")
-//                        setMessage("Akun sudah berhasil dibuat sudah jadi nih. Yuk, login dan belajar coding.")
-//                        setPositiveButton("Lanjut") { _, _ ->
-//                            finish()
-//                        }
-//                        create()
-//                        show()
-//                    }
                 }
             }
         }

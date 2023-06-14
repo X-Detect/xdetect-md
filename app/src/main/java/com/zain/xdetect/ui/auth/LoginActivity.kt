@@ -36,6 +36,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
+        binding.tvForgetPass.setOnClickListener {
+            val moveToResetPasswordActivity = Intent(this@LoginActivity, ResetPasswordActivity::class.java)
+            startActivity(
+                moveToResetPasswordActivity,
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this@LoginActivity).toBundle()
+            )
+        }
         binding.tvBtnRegisterNow.setOnClickListener {
             val moveToSignUpActivity = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(
@@ -68,6 +75,7 @@ class LoginActivity : AppCompatActivity() {
                                 val moveToMenuActivity =
                                     Intent(this@LoginActivity, MenuActivity::class.java)
                                 startActivity(moveToMenuActivity)
+                                finish()
                             }
                             is Result.Error -> {
                                 binding.progressBar.visibility = View.GONE
