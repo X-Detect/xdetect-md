@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="16dp"
-            android:text="@string/deskripsi"
+            android:text="@string/description"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"

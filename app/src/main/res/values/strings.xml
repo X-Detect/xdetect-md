@@ -84,4 +84,5 @@
     <string name="reset">Reset</string>
     <string name="reset_title">Reset Password</string>
     <string name="msg_success_reset">Link Reset Password Telah Dikirim Ke Email</string>
+    <string name="description">Deskripsi</string>
 </resources>
