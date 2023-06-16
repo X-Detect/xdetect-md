@@ -9,6 +9,8 @@ X Detect is a mobile application developed for detecting and predicting certain 
 - Retrofit: To make HTTP requests to the authentication APIs and retrieve data from various endpoints, Retrofit is utilized as the networking library.
 - Cloud Computing: The authentication APIs provided by Cloud Computing are used for user login, registration, and other related functionalities.
 - Firebase: The application runs in real-time using Firebase, which enables seamless integration with the internet and allows for dynamic updates.
+- Glide: An image loading and caching library for efficient handling of images in your application.
+
 
 ## Flow of the Project
 
