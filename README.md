@@ -26,6 +26,15 @@ X Detect is a mobile application developed for detecting and predicting certain 
 - CameraX: A library for camera functionality, allowing you to capture images and interact with the device's camera.
 - Hdodenhof's CircleImageView: A library for displaying circular images in your application's UI.
 
+## Installation
+Our application is based on Android OS. In order to use our application, you will need an Android device that can runs at least Android OS Version 6.0 (Marshmallow). You can download our application (.apk) from the link down below.
+
+https://drive.google.com/file/d/1xBgJDhGKiLfhRGLtUbAiLrehN9WIsIWq/view?usp=sharing
+
+The prototype design of this application is based on Figma. If you want to see the prototype design of this application, you can access it using the link provided below.
+
+https://www.figma.com/proto/IJDbZHlW3Tx6ek6txpHCTa/X-Detect?page-id=65%3A2&type=design&node-id=699-1025&viewport=265%2C370%2C0.36&scaling=scale-down&starting-point-node-id=247%3A323
+
 ## Contact
 
 If you have any questions, suggestions, or feedback, please feel free to reach out to us:
